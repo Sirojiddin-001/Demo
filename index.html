@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HANDWRITTEN</title>
+  <link rel="shortcut icon" href="./assets/img/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/uikit.css" />
+  <link rel="stylesheet" href="./assets/css/page.css" />
+  <link rel="stylesheet" href="./assets/css/main.css" />
+  <link rel="stylesheet" href="./assets/css/quill.css" />
+  <link rel="stylesheet" href="./assets/css/icons.css" />
+  <link rel="manifest" href="./manifest.json">
+  <script src="./assets/js/uikit.min.js"></script>
+  <script src="./assets/js/columnizer.js"></script>
+</head>
+
+<body>
+  <!--NAVBAR-->
+  <header>
+    <nav class="uk-navbar-container" uk-navbar="mode: click">
+      <div class="uk-navbar-left">
+        <a class="uk-navbar-item uk-logo" href="#">HANDWRITTEN</a>
+      </div>
+      <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+          <li title="SETTING" id="set_btn"><a href="#setting" uk-toggle><i class="fal fa-lg fa-cog"></i></a></li>
+          <li title="SAVE AS">
+            <a href="#"><i class="fal fa-lg fa-arrow-to-bottom"></i></a>
+            <div class="uk-navbar-dropdown">
+              <ul class="uk-nav uk-navbar-dropdown-nav">
+                <li class="uk-active">FILE TYPE</li>
+                <li class="uk-nav-divider"></li>
+                <li><a id="save_pdf" href="#"><i class="fal fa-lg fa-file-pdf"></i>&nbsp; PDF</a></li>
+                <li><a id="save_png" href="#"><i class="fal fa-lg fa-file-image"></i>&nbsp; PNG</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!--LOADER-->
+    <div id="loader">
+      <div uk-spinner="ratio: 3"></div>
+    </div>
+
+    <!--EDITOR-->
+    <div id="editor">
+      <p>Welcome</p>
+    </div>
+
+    <!--CONVERT BUTTON-->
+    <button id="convert" class="uk-button uk-button-primary">
+      CONVERT
+    </button>
+
+    <!--GENERATE DOM ELEMENTS-->
+    <div id="generate_dom"></div>
+
+    <!--GENERATE IMAGES-->
+    <div id="generate_img" uk-lightbox="animation: slide"></div>
+  </main>
+
+  <!--MODAL FOR SETTING-->
+  <div id="setting" class="uk-modal-full" uk-modal>
+    <div class="uk-modal-dialog">
+      <button id="setting_close" class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+      <div class="uk-background-cover uk-flex-middle uk-grid-collapse" uk-height-viewport uk-grid>
+        <div class="uk-padding-large">
+          <form class="form">
+            <div class="uk-margin uk-width-1-1">
+              <label class="uk-form-label" for="font-select">Choose a font</label>
+              <div class="uk-form-controls">
+                <select class="uk-select" id="font-select">
+                  <option style="font-size: x-large; font-family:Eskal;">Eskal</option>
+                  <option style="font-size: x-large; font-family:Anselmo;">Anselmo</option>
+                  <option style="font-size: x-large; font-family:Benvolio;">Benvolio</option>
+                  <option style="font-size: x-large; font-family:Capuletty;">Capuletty</option>
+                  <option style="font-size: x-large; font-family:Abram ;">Abram</option>
+                  <option style="font-size: x-large; font-family:Gregory;">Gregory</option>
+                  <option style="font-size: x-large; font-family:Lexa;">Lexa</option>
+                  <option style="font-size: x-large; font-family:Lorenco;">Lorenco</option>
+                  <option style="font-size: x-large; font-family:Merk;">Merk</option>
+                  <option style="font-size: x-large; font-family:Montekky;">Montekky</option>
+                  <option style="font-size: x-large; font-family:Pag;">Pag</option>
+                  <option style="font-size: x-large; font-family:Paris;">Paris</option>
+                  <option style="font-size: x-large; font-family:Salavat;">Salavat</option>
+                  <option style="font-size: x-large; font-family:shriftone;">Shriftone</option>
+                </select>
+              </div>
+            </div>
+            <div class="uk-margin uk-width-1-1">
+              <label class="uk-form-label" for="font-size-select">Choose your font size</label>
+              <div class="uk-form-controls">
+                <select class="uk-select" id="font-size-select">
+                  <option value="2em">Normal</option>
+                  <option value="2.5em">Large</option>
+                  <option value="3em">Huge</option>
+                </select>
+              </div>
+            </div>
+            <div class="uk-margin uk-width-1-1">
+              <label class="uk-form-label" for="page-select">Choose a page background</label>
+              <div class="uk-form-controls">
+                <select class="uk-select" id="page-select">
+                  <option value="grid">Squared notebook</option>
+                  <option value="line">Ruled notebook</option>
+                  <option value="papper">Blank sheet</option>
+                </select>
+              </div>
+            </div>
+            <button id="save_setting_btn" class="uk-button uk-button-primary" type="button">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--PAGES SIZE-->
+  <div id="page_size">
+    <div class="line_size"></div>
+    <div class="grid_size"></div>
+    <div class="papper_size"></div>
+  </div>
+
+  <script src="./assets/js/jspdf.min.js"></script>
+  <script src="./assets/js/jszip.min.js"></script>
+  <script src="./assets/js/FileSaver.min.js"></script>
+  <script src="./assets/js/dom-to-image.min.js"></script>
+  <script type="module" src="./assets/js/main.js"></script>
+</body>
+
+</html>
