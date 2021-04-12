@@ -1,5 +1,5 @@
-const staticCacheName = 's-app-v1'
-const dynamicCacheName = 'd-app-v1'
+const staticCacheName = 's-app-v1.1'
+const dynamicCacheName = 'd-app-v1.1'
 
 const assetUrls = [
   "./assets/css/icons.css",
@@ -64,7 +64,7 @@ self.addEventListener('fetch', event => {
   const {request} = event
 
   const url = new URL(request.url)
-  if (url.origin === location.origin) {
+  if (url.origin == location.origin) {
     event.respondWith(cacheFirst(request))
   } else {
     event.respondWith(networkFirst(request))
